@@ -1,7 +1,7 @@
 {
-    "name": "Chrome Extension Example",
+    "name": "Eatinder",
     "version": "1.0",
-    "description": "Build an Extension!",
+    "description": "A Chrome Extension that helps people to decide their restaurant at yemeksepeti.com",
     "manifest_version": 2,
 	"background": {
         "scripts": [
@@ -24,5 +24,12 @@
         "32": "images/img32.png",
         "48": "images/img48.png",
         "128": "images/img128.png"
+    },
+	"permissions": ["tabs", "*://*.yemeksepeti.com/*"],
+	"content_scripts": [
+    {
+      "matches": ["*://*.yemeksepeti.com/*"],
+      "js": ["background.js"]
     }
+  ]
 }
