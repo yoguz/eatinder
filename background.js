@@ -1,31 +1,57 @@
-// Yemek begenim htmli cikartacak.
-function kararButonuEvent() {
-	// FIXME: Simlilik alert basiyor.
+// It will pop-up the like-dislike page
+function cantDecideButtonEvent() {
+	// FIXME: Alerts for now
 	alert("Tinderla beni");
+	getAllCuisinesWithCounts();
 }
 
-// Sayfanin gercekten restoran listeleme sayfasi mi oldugunu kontrol eder.
-function restoranListelemeEkraniMi() {
-	// FIXME: Simdilik true donuyor.
+// Returns {cuisine, count} object list
+function getAllCuisinesWithCounts() {
+	var cuisineMap = {}
+	var toolTipList = document.body.getElementsByClassName("withTooltip");
+	for (var i = 0; i < toolTipList.length; i++) {
+		var stringTooltip = toolTipList[i].getElementsByTagName("span")[0]["dataset"]["tooltip"];
+		var objTooltip = JSON.parse(stringTooltip);
+		var cuisineNameList  = objTooltip["CuisineNameList"];
+		for (var j = 0; j < cuisineNameList.length; j++) {
+			if (cuisineMap[cuisineNameList[j]] !== undefined) {
+				cuisineMap[cuisineNameList[j]]++;
+			} else {
+				cuisineMap[cuisineNameList[j]] = 1;
+			}
+		}
+	}
+	var cuisineKeyValueMap = [];
+	console.log(cuisineMap);
+	for (var cuisine in cuisineMap) {
+		cuisineKeyValueMap.push({"cuisine": cuisine, "count": cuisineMap[cuisine]});
+	}
+	cuisineKeyValueMap.sort((a, b) => (a.count > b.count) ? -1 : 1);
+	
+	return cuisineKeyValueMap;
+}
+
+// Check if the page is restaurant listing page in yemeksepeti.com
+function isRestaurantListingPage() {
+	// FIXME: Returns true for now.
 	return true;
 }
 
-// Sayfa yuklendikten sonra cagirilir.
+// This function is called after loading the page.
 function onWindowLoad() {
-	// Restoran listeleme ekrani degilse pas gecilir.
-	if (!restoranListelemeEkraniMi()) {
+	if (!isRestaurantListingPage()) {
 		return;
 	}
 	
-	var kararButonu = document.createElement("button");
-	kararButonu.innerHTML = "Karar Veremiyorum";
-	kararButonu.className = "ys-btn ys-btn-info ys-btn-xs";
-	kararButonu.id = "kararButonu";
-	kararButonu.addEventListener("click", kararButonuEvent);
-	kararButonu.style = "padding-top:4px; padding-bottom:4px;";
+	var cantDecideButton = document.createElement("button");
+	cantDecideButton.innerHTML = "Karar Veremiyorum";
+	cantDecideButton.className = "ys-btn ys-btn-info ys-btn-xs";
+	cantDecideButton.id = "kararButonu";
+	cantDecideButton.addEventListener("click", cantDecideButtonEvent);
+	cantDecideButton.style = "padding-top:4px; padding-bottom:4px;";
 	
-	var butonListesi = document.body.getElementsByClassName("ys-reslist-sort init")[0];
-	butonListesi.append(kararButonu); 	// Karar Veremiyorum butonu sayfaya eklenir.
+	var buttonList = document.body.getElementsByClassName("ys-reslist-sort init")[0];
+	buttonList.append(cantDecideButton); 	// Can't Decide button is added to page
 }
 
 window.onload = onWindowLoad;
