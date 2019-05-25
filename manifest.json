@@ -28,7 +28,7 @@
 	"permissions": ["tabs", "*://*.yemeksepeti.com/*"],
 	"content_scripts": [
     {
-      "matches": ["*://*.yemeksepeti.com/*"],
+      "matches": ["*://*.yemeksepeti.com/*/*"],
       "js": ["background.js"]
     }
   ]
