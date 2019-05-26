@@ -6,7 +6,7 @@
 	"background": {
         "scripts": [
             "js/es6-promise.auto.min.js",
-            "js/defaults.js"
+            "js/jquery-3.4.1.min.js"
         ],
         "persistent": false
     },
@@ -29,7 +29,15 @@
 	"content_scripts": [
     {
       "matches": ["*://*.yemeksepeti.com/*/*"],
-      "js": ["background.js"]
+      "js": [
+	      "js/jquery-3.4.1.min.js",
+		  "background.js"
+	  ]
     }
-  ]
+    ],
+	"web_accessible_resources": [
+	  "decision.html",
+	  "decision-page-loader.js",
+	  "images/*"
+	]
 }

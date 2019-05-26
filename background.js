@@ -1,8 +1,15 @@
 // It will pop-up the like-dislike page
 function cantDecideButtonEvent() {
-	// FIXME: Alerts for now
-	alert("Tinderla beni");
-	getAllCuisinesWithCounts();
+	//getAllCuisinesWithCounts();
+	var s = document.createElement('script');
+	var decisionDiv = document.createElement('div');
+	decisionDiv.id = 'decisionDiv';
+	document.body.append(decisionDiv);
+	s.src = chrome.runtime.getURL('decision-page-loader.js');
+	s.onload = function() {
+		this.parentNode.removeChild(this);
+	};
+	(document.head||document.documentElement).appendChild(s);
 }
 
 // Returns {cuisine, count} object list
