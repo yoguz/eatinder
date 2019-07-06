@@ -38,6 +38,7 @@
 	"web_accessible_resources": [
 	  "decision.html",
 	  "decision-page-loader.js",
-	  "images/*"
+      "images/*",
+      "itsamatch.html"
 	]
 }
