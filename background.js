@@ -43,20 +43,22 @@ function fillSwipeCuisineList(cuisineCountArray) {
 	}
 }
 
+function matchScreenAndResult() {
+
+}
+
 // shows next food picture if any left, or shows match picture
 function showNextUnswipedCuisine(){
-	console.log("showNextUnswipedCuisine:" + eatinderSwipeCuisines.length);
 	if (eatinderSwipeCuisines.length > 0) {		// Show next food picture
 		var nextCuisine = eatinderSwipeCuisines.pop();
 		console.log(nextCuisine);
 		var cuisineJpg = eatinderCuisinePictureMap[nextCuisine];
 		var jpegImgElem = document.getElementById("eatinder-image-img");
-		console.log(chrome.extension);
 		jpegImgElem.src = chrome.extension.getURL("images/" + cuisineJpg);
 		console.log(jpegImgElem.src);
 		eatinderCurrentCuisine = nextCuisine;
 	} else {	// Show match picture
-	
+		matchScreenAndResult();
 	}
 }
 
