@@ -39,6 +39,7 @@
 	  "decision.html",
 	  "decision-page-loader.js",
 	  "images/*",
-	  "background.js"
+	  "background.js",
+      "itsamatch.html"
 	]
 }
