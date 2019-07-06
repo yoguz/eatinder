@@ -1,31 +1,42 @@
-var cuisinePictureMap = {
-	"Burger": "burger.jpg",
-	"Döner": "burger.jpg",
-	"Ev Yemekleri": "burger.jpg",
-	"Fast Food & Sandwich": "burger.jpg",
-	"Kahvaltı": "burger.jpg",
-	"Kebap & Türk Mutfağı": "burger.jpg",
-	"Kumpir": "burger.jpg",
-	"Köfte": "burger.jpg",
-	"Pasta & Tatlı": "burger.jpg",
-	"Pide": "burger.jpg",
-	"Pizza & İtalyan": "burger.jpg",
-	"Tantuni": "burger.jpg",
-	"Tavuk": "burger.jpg",
-	"Çiğ Köfte": "burger.jpg"
+var eatinderCuisinePictureMap = {
+	"Burger": "Burger.jpg",
+	"Döner": "Doner.jpg",
+	"Ev Yemekleri": "Ev_Yemekleri.jpg",
+	"Fast Food & Sandwich": "Fastfood_and_Sandwich.jpg",
+	"Kahvaltı": "Kahvalti.jpg",
+	"Kebap & Türk Mutfağı": "Kebap_and_Turk Mutfagi.jpg",
+	"Kumpir": "Kumpir.jpg",
+	"Köfte": "Kofte.jpg",
+	"Pasta & Tatlı": "Pasta_and_Tatli.jpeg",
+	"Pide": "Pide.jpg",
+	"Pizza & İtalyan": "Pizza_Italyan.jpg",
+	"Tantuni": "Tantuni.jpg",
+	"Tavuk": "Tavuk.jpg",
+	"Çiğ Köfte": "Cig_Kofte.jpg"
 }
 
-var swipeCuisines = []
-var likedCuisines = []
-var currentCuisine;
+var eatinderSwipeCuisines = [];
+var eatinderLikedCuisines = [];
+var eatinderCurrentCuisine;
+
+function eatinderLiked() {
+	console.log("eatinderLiked");
+	eatinderLikedCuisines.push(eatinderCurrentCuisine);
+	showNextUnswipedCuisine();
+}
+
+function eatinderDisliked() {
+	console.log("eatinderDisliked");
+	showNextUnswipedCuisine();
+}
 
 // Selects 5 randomly cuisines and fills them into swipeCuisines list
 function fillSwipeCuisineList(cuisineCountArray) {
 	var addCount = 0;
 	var i = 0;
 	while (addCount < 5 && i < cuisineCountArray.length ) {
-		if (cuisinePictureMap[cuisineCountArray[i].cuisine] !== undefined) {
-			swipeCuisines.push(cuisineCountArray[i].cuisine);
+		if (eatinderCuisinePictureMap[cuisineCountArray[i].cuisine] !== undefined) {
+			eatinderSwipeCuisines.push(cuisineCountArray[i].cuisine);
 			addCount++;
 		}
 		i++;
@@ -34,39 +45,70 @@ function fillSwipeCuisineList(cuisineCountArray) {
 
 // shows next food picture if any left, or shows match picture
 function showNextUnswipedCuisine(){
-	if (swipeCuisines.length > 0) {		// Show next food picture
-		var nextCuisine = swipeCuisines.pop();
+	console.log("showNextUnswipedCuisine:" + eatinderSwipeCuisines.length);
+	if (eatinderSwipeCuisines.length > 0) {		// Show next food picture
+		var nextCuisine = eatinderSwipeCuisines.pop();
 		console.log(nextCuisine);
-		var cuisineJpg = cuisinePictureMap[nextCuisine];
+		var cuisineJpg = eatinderCuisinePictureMap[nextCuisine];
 		var jpegImgElem = document.getElementById("eatinder-image-img");
-		jpegImgElem.src = "chrome-extension://hfchedmaclelneclbdllnchgfklddpcj" + "/images/" + cuisineJpg;
+		console.log(chrome.extension);
+		jpegImgElem.src = chrome.extension.getURL("images/" + cuisineJpg);
+		console.log(jpegImgElem.src);
+		eatinderCurrentCuisine = nextCuisine;
 	} else {	// Show match picture
 	
 	}
-}
-
-function eatinderLiked() {
-	likedCuisines.push(currentCuisine);
-	showNextUnswipedCuisine();
 }
 
 // It will pop-up the like-dislike page
 function cantDecideButtonEvent() {
 	var cuisineCountArray = getAllCuisinesWithCounts();
 	fillSwipeCuisineList(cuisineCountArray);
-	/*var s = document.createElement('script');
-	s.src = chrome.runtime.getURL('decision-page-loader.js');
-	s.onload = function() {
-		this.parentNode.removeChild(this);
-	};
-	(document.head||document.documentElement).appendChild(s);
-	*/
+	
 	var decisionDiv = document.createElement('div');
-	decisionDiv.id = 'decisionDiv';
+	decisionDiv.id = 'eatinder-decision-div';
+	decisionDiv.tabindex = "-1";
+	decisionDiv.style = "display: block; z-index: 1; visibility: visible; top: 0px; left: 0px; position: fixed; width: 100%; height: 100%; background-color:rgba(185, 176, 176, 0.65);";
+	
+	var decisionImgDiv = document.createElement('div');
+	decisionImgDiv.style = "top: 15%; left:30%; width: 40%; height: 60%; position:fixed";
+	
+	var decisionImgImg = document.createElement("img");
+	decisionImgImg.id = 'eatinder-image-img';
+	decisionImgImg.style = "width: 100%; height: 100%;";
+	
+	var decisionDislikeDiv = document.createElement('div');
+	decisionDislikeDiv.style = "top: 77%; left:30%; width: 15%; height: 10%; position:fixed";
+	
+	var decisionDislikeButton = document.createElement("button");
+	decisionDislikeButton.id = "eatinder-dislike-btn";
+	decisionDislikeButton.style = "background-color:RED; width=%100;"
+	decisionDislikeButton.className = "ys-btn";
+	decisionDislikeButton.addEventListener("click", eatinderDisliked);
+	decisionDislikeButton.innerHTML = "BEGENME";
+	
+	var decisionLikeDiv = document.createElement('div');
+	decisionLikeDiv.style = "top: 77%; left:55%; width: 15%; height: 10%; position:fixed";
+	
+	var decisionLikeButton = document.createElement("button");
+	decisionLikeButton.id = "eatinder-like-btn";
+	decisionLikeButton.addEventListener("click", eatinderLiked);
+	decisionLikeButton.style = "background-color:green; width=%100;";
+	decisionLikeButton.className = "ys-btn";
+	decisionLikeButton.innerHTML = "BEGEN";
+	
+	decisionImgDiv.append(decisionImgImg);
+	decisionDislikeDiv.append(decisionDislikeButton);
+	decisionLikeDiv.append(decisionLikeButton);
+	decisionDiv.append(decisionImgDiv);
+	decisionDiv.append(decisionDislikeDiv);
+	decisionDiv.append(decisionLikeDiv);
+	
 	document.body.append(decisionDiv);
-	$('#decisionDiv').load('chrome-extension://hfchedmaclelneclbdllnchgfklddpcj/decision.html', function(){
-		showNextUnswipedCuisine();
-	});
+	showNextUnswipedCuisine();
+	//$('#decisionDiv').load(chrome.extension.getURL("decision.html"), function(){
+	//	showNextUnswipedCuisine();
+	//});
 }
 
 // Returns {cuisine, count} object list
