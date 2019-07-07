@@ -43,9 +43,6 @@ function fillSwipeCuisineList(cuisineCountArray) {
 	}
 }
 
-function matchScreenAndResult() {
-
-}
 
 // shows next food picture if any left, or shows match picture
 function showNextUnswipedCuisine(){
@@ -111,6 +108,30 @@ function cantDecideButtonEvent() {
 	//$('#decisionDiv').load(chrome.extension.getURL("decision.html"), function(){
 	//	showNextUnswipedCuisine();
 	//});
+}
+
+function matchScreenAndResult() {
+	$('#eatinder-decision-div').fadeOut();
+
+	var matchDiv = document.createElement('div');
+	matchDiv.id = 'eatinder-match-div';
+	matchDiv.tabindex = "-1";
+	matchDiv.style = "display: block; z-index: 1; visibility: visible; top: 0px; left: 0px; position: fixed; width: 100%; height: 100%; background-color:rgba(185, 176, 176, 0.65);";
+	
+	var matchImgDiv = document.createElement('div');
+	matchImgDiv.style = "top: 15%; left:30%; width: 40%; height: 60%; position:fixed";
+	
+	var matchImgImg = document.createElement("img");
+	matchImgImg.id = 'eatinder-imagematch-img';
+	matchImgImg.style = "width: 100%; height: 100%;";
+	
+	matchImgDiv.append(matchImgImg);
+	matchDiv.append(matchImgDiv);
+	//document.body.append(matchDiv);
+	$(matchDiv).hide().appendTo(document.body).fadeIn(2000);
+
+	var jpegImgElem = document.getElementById("eatinder-imagematch-img");
+	jpegImgElem.src = chrome.extension.getURL("images/Its_a_match.png");
 }
 
 // Returns {cuisine, count} object list
