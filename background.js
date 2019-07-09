@@ -20,13 +20,11 @@ var eatinderLikedCuisines = [];
 var eatinderCurrentCuisine;
 
 function eatinderLiked() {
-	console.log("eatinderLiked");
 	eatinderLikedCuisines.push(eatinderCurrentCuisine);
 	showNextUnswipedCuisine();
 }
 
 function eatinderDisliked() {
-	console.log("eatinderDisliked");
 	showNextUnswipedCuisine();
 }
 
@@ -44,18 +42,61 @@ function fillSwipeCuisineList(cuisineCountArray) {
 }
 
 function matchScreenAndResult() {
-
+	// Match screen comes here
+	
+	var allRestaurantList = document.getElementsByClassName("ys-reslist")[0].getElementsByClassName("ys-item");
+	var acceptedRestaurantList = [];
+	
+	if (eatinderLikedCuisines.length == 0) {
+		acceptedRestaurantList = allRestaurantList;
+	} else {
+		// console.log(allRestaurantList);
+		// console.log(eatinderLikedCuisines);
+		for (var i = 0; i < allRestaurantList.length; ++i) {
+			var restaurant = allRestaurantList[i];
+			// console.log(restaurant);
+			var stringTooltip = restaurant.getElementsByTagName("span")[1]["dataset"]["tooltip"];
+			if (stringTooltip === undefined || stringTooltip === "undefined") {
+				continue;
+			}
+			
+			var objTooltip = JSON.parse(stringTooltip);
+			var cuisineNameList  = objTooltip["CuisineNameList"];
+			// console.log(cuisineNameList);
+			for (var j = 0; j < eatinderLikedCuisines.length; ++j) {
+				var likedCuisine = eatinderLikedCuisines[j];
+				// console.log(68 + ": " + likedCuisine);
+				for (var k = 0; k < cuisineNameList.length; ++k){
+					var restaurantCuisine = cuisineNameList[k];
+					// console.log(71 + ": " + restaura);
+					// console.log("restaurantCuisine:" + restaurantCuisine + ", likedCuisine:" + likedCuisine);
+					if (likedCuisine === restaurantCuisine) {
+						// console.log("restaurantCuisine:" + restaurantCuisine + ", likedCuisine:" + likedCuisine);
+						acceptedRestaurantList.push(restaurant);
+					}
+				}
+			}
+		}
+		console.log(acceptedRestaurantList);
+	}
+	
+	var finalRestaurantList = [];
+	for (var i = 0; i < 3; ++i) {
+		var index = Math.floor(Math.random() * acceptedRestaurantList.length);
+		finalRestaurantList.push(acceptedRestaurantList[index]);
+		acceptedRestaurantList.splice(index, 1);
+	}
+	
+	console.log(finalRestaurantList);
 }
 
 // shows next food picture if any left, or shows match picture
 function showNextUnswipedCuisine(){
 	if (eatinderSwipeCuisines.length > 0) {		// Show next food picture
 		var nextCuisine = eatinderSwipeCuisines.pop();
-		console.log(nextCuisine);
 		var cuisineJpg = eatinderCuisinePictureMap[nextCuisine];
 		var jpegImgElem = document.getElementById("eatinder-image-img");
 		jpegImgElem.src = chrome.extension.getURL("images/" + cuisineJpg);
-		console.log(jpegImgElem.src);
 		eatinderCurrentCuisine = nextCuisine;
 	} else {	// Show match picture
 		matchScreenAndResult();
