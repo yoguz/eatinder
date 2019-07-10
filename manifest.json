@@ -40,6 +40,9 @@
 	  "decision-page-loader.js",
 	  "images/*",
 	  "background.js",
-      "itsamatch.html"
+      "itsamatch.html",
+	  "js/all.js",
+	  "css/all.css",
+	  "webfonts/*"
 	]
 }
