@@ -1,0 +1,210 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-width: 100px;
+}
+
+#eatinder-decision-div {
+  font-size: 62.5%;
+  background: #63BDF7;
+  overflow: hidden;
+}
+
+.fa-check-circle {
+	color: green;
+	float: right;
+	margin-right: 60px;
+	margin-top:15px;
+}
+
+.fa-times-circle {
+	color: red;
+	margin-left: 60px;
+	margin-top:15px;
+}
+
+.eatinder {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 35rem;
+  height: 65rem;
+  margin-left: -15.3rem;
+  margin-top: -27rem;
+  background: #002942;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+.eatinder__header {
+  height: 8rem;
+  width: 100%;
+  background: #002942;
+}
+.eatinder__content {
+  overflow: hidden;
+  position: relative;
+  height: 48rem;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.eatinder__card-cont {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.eatinder__logo {
+	position: relative;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 30%;
+	height: 90%;
+	padding-top: 2rem;
+}
+
+.eatinder__card {
+  z-index: 2;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transform-origin: 50% 100%;
+          transform-origin: 50% 100%;
+}
+.eatinder__card.reset {
+  transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+  transition: transform 0.3s, -webkit-transform 0.3s;
+  -webkit-transform: translateX(0) !important;
+          transform: translateX(0) !important;
+}
+.eatinder__card.reset .eatinder__card__choice {
+  transition: opacity 0.3s;
+  opacity: 0 !important;
+}
+.eatinder__card.inactive {
+  transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+  transition: transform 0.3s, -webkit-transform 0.3s;
+}
+.eatinder__card.to-left {
+  -webkit-transform: translateX(-30rem) rotate(-30deg) !important;
+          transform: translateX(-30rem) rotate(-30deg) !important;
+}
+.eatinder__card.to-right {
+  -webkit-transform: translate(30rem) rotate(30deg) !important;
+          transform: translate(30rem) rotate(30deg) !important;
+}
+.eatinder__card.below {
+  z-index: 1;
+}
+.eatinder__card__top {
+  height: 100%;
+}
+.eatinder__card__top.purple {
+  background: #7132B9;
+}
+.eatinder__card__top.blue {
+  background: #248CB6;
+}
+.eatinder__card__top.indigo {
+  background: #303F9F;
+}
+.eatinder__card__top.cyan {
+  background: #26C6DA;
+}
+.eatinder__card__top.lime {
+  background: #AFB42B;
+}
+.eatinder__card__top.brown {
+  background: #b20010;
+}
+.eatinder__card__img {
+  overflow: hidden;
+  width: 10rem;
+  height: 10rem;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  border: 0.5rem solid #ffffff;
+  background-image: url("//s3-us-west-2.amazonaws.com/s.cdpn.io/142996/profile/profile-512_5.jpg");
+  background-size: cover;
+}
+.eatinder__card__name {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+}
+.eatinder__card__btm {
+  height: 11.5rem;
+  background: #FFFFFF;
+}
+.eatinder__card__we {
+  text-align: center;
+  font-size: 2.2rem;
+  line-height: 11.5rem;
+}
+.eatinder__card__choice {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+.eatinder__card__choice:before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2rem;
+  height: 2rem;
+  margin-left: -1rem;
+  color: #fff;
+  border-radius: 50%;
+  box-shadow: -2rem -3rem #fff, 2rem -3rem #fff;
+}
+.eatinder__card__choice:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 4rem;
+  height: 1.5rem;
+  margin-left: -2rem;
+  border: 0.6rem solid #fff;
+  border-bottom: none;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+}
+.eatinder__card__choice.m--reject {
+  background: #FF945A;
+}
+.eatinder__card__choice.m--like {
+  background: #B1DA96;
+}
+.eatinder__card__choice.m--like:after {
+  -webkit-transform: scaleY(-1);
+          transform: scaleY(-1);
+}
+.eatinder__card__drag {
+  z-index: 5;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+.eatinder__tip {
+  text-align: center;
+  font-size: 2.2rem;
+}

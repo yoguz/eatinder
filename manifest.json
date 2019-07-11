@@ -37,12 +37,11 @@
     ],
 	"web_accessible_resources": [
 	  "decision.html",
-	  "decision-page-loader.js",
-	  "images/*",
 	  "background.js",
-      "itsamatch.html",
-	  "js/all.js",
-	  "css/all.css",
+	  "images/*",
+	  "images2/*",
+	  "js/*",
+	  "css/*",
 	  "webfonts/*"
 	]
 }
